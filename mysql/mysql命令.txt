@@ -1,0 +1,28 @@
+1.配置my.ini，拷贝到解压目录下
+2.切换到bin目录下。安装mysql服务： mysqld -install
+3.初始化数据文件：mysqld --initialize-insecure --user=mysql
+4.启动mysql：net start mysql，用命令 mysql -u root -p进入mysql管理界面（密码可为空）
+5.进入界面后更改root密码：update mysql.user set authentication_string=password('123456') where user='root' and Host='localhost';
+6.最后输入flush privileges; 刷新权限，在mysql>下
+7.修改my.ini文件删除最后一句skip-grant-tables
+8.重启mysql即可正常使用：net stop mysql      net start mysql
+9.测试连接：mysql -u root -p123456
+
+
+清空服务，删掉重装：sc delete mysql
+
+修改数据库密码：
+set password for root@localhost = password('123');
+
+
+（1）SHOW VARIABLES LIKE 'log_bin_trust_function_creators';
+ SET @@global.log_bin_trust_function_creators='ON';
+ set global log_bin_trust_function_creators=TRUE;
+（2）show VARIABLES like '%max_allowed_packet%';  //查看最大值
+  set global max_allowed_packet = 1024*1024*1024;
+flush privileges;  
+
+
+
+grant all privileges on *.* to 'root'@'%' identified by ".";
+flush privileges;  
